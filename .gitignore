@@ -1,0 +1,32 @@
+# ── Models & adapters ──────────────────────────────────────────
+hf_cache/
+qwen3-4b-qlora-jd/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+
+# ── Generated data (large files) ───────────────────────────────
+data/jd_embeddings.npz
+data/jd_faiss.index
+
+# ── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ── Jupyter ────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── OS ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Env & secrets ──────────────────────────────────────────────
+.env
+*.key

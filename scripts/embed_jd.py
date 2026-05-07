@@ -1,21 +1,21 @@
 """
-embed_jd_bgem3.py
-=================
-Embed `rag_text` của từng JD trong jd_clean.json bằng BGE-M3
-(AITeamVN/Vietnamese_Embedding) và lưu thành 1 file .npz duy nhất.
+embed_jd.py
+===========
+Embed `rag_text` của từng JD trong data/jd_clean.json bằng BGE-M3
+(AITeamVN/Vietnamese_Embedding) và lưu thành data/jd_embeddings.npz.
 
 Chiến lược chunking: 1 JD = 1 chunk = 1 vector (rag_text đã tổng hợp gọn).
 
-Output: jd_embeddings.npz
+Output: data/jd_embeddings.npz
   - embeddings : float32 ndarray [N, 1024]   (đã L2-normalize → dùng dot = cosine)
-  - jd_ids     : object  ndarray [N]         (vd: "JD-0008")
-  - texts      : object  ndarray [N]         (rag_text gốc)
+  - jd_ids     : object  ndarray [N]
+  - texts      : object  ndarray [N]
   - companies  : object  ndarray [N]
   - titles     : object  ndarray [N]
   - cities     : object  ndarray [N]
 
 Sau này nạp vào FAISS/Chroma:
-    data = np.load("jd_embeddings.npz", allow_pickle=True)
+    data = np.load("data/jd_embeddings.npz", allow_pickle=True)
     index = faiss.IndexFlatIP(1024); index.add(data["embeddings"])
 """
 
@@ -57,8 +57,8 @@ def encode_batch(texts: list[str], tokenizer, model, device: str) -> np.ndarray:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input",  default="jd_clean.json")
-    parser.add_argument("--output", default="jd_embeddings.npz")
+    parser.add_argument("--input",  default="data/jd_clean.json")
+    parser.add_argument("--output", default="data/jd_embeddings.npz")
     parser.add_argument("--device",
                         default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--batch-size", type=int, default=BATCH_SIZE)
